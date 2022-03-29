@@ -1,28 +1,59 @@
- import React from 'react'
- import './cart.css'
- import Burger from './Burger'
+import React, { Fragment } from "react";
+import Burger from "./Burger";
+import "../styles/styles.css";
 
+const Cart = ({ cart, setCart }) => {
+  const viewCart = () => {
+    {
+      document.querySelector(
+        "div.container__header__cartDiv--list"
+      ).style.display = "none"
+        ? (document.querySelector(
+            "div.container__header__cartDiv--list"
+          ).style.display = "flex")
+        : (document.querySelector(
+            "div.container__header__cartDiv--list"
+          ).style.display = "none");
+    }
+  };
 
+  const closeDiv = () => {
+    document.querySelector(
+      "div.container__header__cartDiv--list"
+    ).style.display = "none";
+  };
 
- const Cart = ({cart, setCart}) => {
-     return (
-         <div className='cart'>
-            <h3>Carrito</h3>
-
-        {cart.lenght === 0 ? (
-        <p>0</p>
+  return (
+    <Fragment>
+      <div className="container__header__cartDiv">
+        <p className="container__header__cartDiv--count">{cart.length}</p>
+        <button
+          className="container__header__cartDiv--btnCart"
+          onClick={() => viewCart()}
+        ></button>
+      </div>
+      <div className="container__header__cartDiv--list">
+        <button
+          className="container__content__burgers--btnClose"
+          type="button"
+          onClick={() => closeDiv()}
+        >
+          X
+        </button>
+        {cart.length === 0 ? (
+          <p>Carrito vacio...</p>
         ) : (
-            cart.map((burger => 
-            <Burger 
-            key={burger.id} 
-            burger={burger} 
-            cart={cart} 
-            setCart={setCart} 
+          cart.map((burger) => (
+            <Burger
+              key={burger.id}
+              burger={burger}
+              cart={cart}
+              setCart={setCart}
             />
-            ))
-            ) }
-         </div>
-     )
- }
- 
- export default Cart
+          ))
+        )}
+      </div>
+    </Fragment>
+  );
+};
+export default Cart;
